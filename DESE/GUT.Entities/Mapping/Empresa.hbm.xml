@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="GUT.Entities" namespace="GUT.Entities">
+
+  <class name="Empresa" schema="GUT" table="EMPRESA_EP" lazy="false">
+
+    <id name="Id" type="int" unsaved-value="0" column="EMEP_CD_EMPRESA_EP" />
+
+    <property name="Nome"               type="AnsiString" length="200" column="EMEP_NM_RZ_SOC_EMP" insert="false" update="false"/>
+    
+    <property name="NomeAbreviado"      type="AnsiString" length="50"  column="EMEP_NM_NOME_ABREV" insert="false" update="false"/>
+    
+    <property name="Cnpj"               type="AnsiString" length="20"  column="EMEP_SG_CNPJ_EMP"   insert="false" update="false"/>
+    
+    <property name="InscricaoEstadual"  type="AnsiString" length="20"  column="EMEP_SG_INSC_ESTAD" insert="false" update="false"/>
+    
+    <property name="IsPetrobras"        type="GUT.Entities.CustomTypes.SimNaoType, GUT.Entities" column="EMEP_IN_EXT_PETROB" insert="false" update="false"/>
+
+  </class>
+
+</hibernate-mapping>

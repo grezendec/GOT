@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="GUT.Entities" namespace="GUT.Entities">
+
+  <class name="UnidadeMedida" schema="GUT" table="UNIDADE_MEDIDA" lazy="false">
+
+    <id name="Id" type="int" unsaved-value="0" column="UNME_CD_UNIDADE" />
+
+    <property name="Sigla"     type="AnsiString" length="16" not-null="true" column="UNME_SG_UNIDADE" insert="false" update="false"/>
+
+    <property name="Nome"      type="AnsiString" length="40" not-null="true" column="UNME_NM_UNIDADE" insert="false" update="false"/>
+    
+    <property name="Descricao" type="AnsiString" length="60" not-null="false" column="UNME_TX_UNIDADE" insert="false" update="false"/>
+
+  </class>
+
+</hibernate-mapping>

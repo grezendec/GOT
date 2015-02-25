@@ -1,0 +1,37 @@
+﻿@using GUT.Infra.Extensions;
+@if (TempData.ContainsKey("msg"))
+{
+    var msg = Html.Raw(TempData["msg"].ToJson());
+
+    TempData.Remove("msg");
+
+    <script type="text/javascript">
+        $(window).load(function (e) {
+            var msgs = @msg;
+
+            for (var i = 0; i < msgs.length; i++) {
+
+                var msg = msgs[i];
+                var ico = GritterType.Info;
+
+                switch (msg.Tipo)
+                {
+                    case 1:
+                        ico = GritterType.Alert;
+                        break;
+                    case 2:
+                        ico = GritterType.Error;
+                        break;
+                    case 3:
+                        ico = GritterType.Success;
+                        break;
+                    case 0:
+                        ico = GritterType.Info;
+                        break;
+                }
+                
+                ShowGritter(msg.Titulo, msg.Mensagem, ico, msg.Tempo, msg.Fixo);
+            }
+        });
+    </script>
+}

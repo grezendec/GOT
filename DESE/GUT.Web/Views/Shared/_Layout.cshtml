@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>GUT - Guia &Uacute;nica de Transporte</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        <script language="javascript">
+            var urlPrefix = '@Url.Content("~")';
+        </script>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/Content/scripts")
+        @{Html.RenderAction("GritterTemplate");}  
+        @RenderSection("Head", false)  
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("GUT - Guia Única de Transporte", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        Olá, <span class="username">@User.Identity.Name</span>!
+                    </section>
+                    <nav>
+                        @Html.Partial("Menu")
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                </div>
+            </div>
+        </footer>
+
+        
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

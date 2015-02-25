@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="GUT.Entities" namespace="GUT.Entities">
+
+  <class name="NotaFiscal" schema="GUT" table="NOTA_FISCAL_GUT" lazy="false">
+
+    <id name="Id" type="int" unsaved-value="0" column="NOFG_SQ_NOTA_FISCAL">
+      <generator class="sequence">
+        <param name="sequence">SQ_NOFG_SQ_NOTA_FISCAL</param>
+      </generator>
+    </id>
+    
+    <property name="NumeroNotaFiscal" type="AnsiString" length="20" not-null="true" column="NOFG_CD_NOTA_FISCAL_SAP" />
+    
+    <property name="DataNotaFiscal" type="DateTime" not-null="true" column="NOFG_DT_EMISSAO" />
+
+  </class>
+
+</hibernate-mapping>

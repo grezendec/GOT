@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="GUT.Entities" namespace="GUT.Entities">
+
+  <class name="GuiaUnicaTransporte" schema="GUT" table="GUIA_UNICO_TRANSPORTE" lazy="false">
+
+    <id name="Id" type="int" unsaved-value="0" column="GUUT_SQ_GUT">
+      <generator class="sequence">
+        <param name="sequence">SQ_GUUT_SQ_GUT</param>
+      </generator>
+    </id>
+
+    <property name="Numero"           type="AnsiString" length="20"   column="GUUT_NR_IMPRESSO_GUT" not-null="false" />
+    <property name="Serie"            type="AnsiString" length="20"   column="GUUT_NR_SERIE_IMPRESSO_GUT" not-null="false" />
+    <property name="Observacao"       type="AnsiString" length="4000" column="GUUT_TX_OBSERVACAO" not-null="false" />
+    <property name="DescricaoPadrao"  type="AnsiString" length="200"  column="GUUT_TX_DESCRICAO_PADRAO_ITEM" not-null="true" />
+
+    <property name="DataEmissao"        type="DateTime" column="" not-null="false" />
+    
+    <property name="EnviadoTributario"  type="GUT.Entities.CustomTypes.SimNaoType, GUT.Entities" column="GUUT_DT_EMISSAO_GUT" not-null="true" />
+
+    <many-to-one name="Origem" not-null="true" class="Empresa" column="EMEP_CD_EMPRESA_EP_ORIGEM" fetch="join" />
+
+    <many-to-one name="Destino" not-null="true" class="Empresa" column="EMEP_CD_EMPRESA_EP_DESTINO" fetch="join" />
+
+    <property name="FinalidadeOperacao" column="GUUT_IN_FINALIDADE_OPERACAO" type="GUT.Entities.CustomTypes.GenericEnumIntTypeMapper`1[[GUT.Entities.GuiaUnicaTransporte+FinalidadesOperacao,GUT.Entities]],GUT.Entities" />
+
+    <bag name="ItensGut" cascade="all-delete-orphan" schema="GUT" table="ITEM_GUT" inverse="true" lazy="true">
+      <key column="GUUT_SQ_GUT"/>
+      <one-to-many class="ItemGut"/>
+    </bag>
+    
+  </class>
+
+</hibernate-mapping>

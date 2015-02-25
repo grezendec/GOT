@@ -1,0 +1,174 @@
+﻿@using GUT.Web.Models
+@model GuiaUnicaTransporteCadastrarModel
+
+@{
+    ViewBag.Title = "Cadastrar";
+}
+
+@section Head {
+    @Html.Script("~/Scripts/GuiaUnicaTransporte.Cadastrar.js")
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(string.Empty, new { @class = "error" })
+    <h2>Cadastrar</h2>
+    
+    <div class="break">
+        <h1>Dados Gerais</h1>
+
+        <div class="grid-2 break">
+            <label>Número da GUT</label>
+            @Html.TextBoxFor(model => model.GuiaUnicaTransporte.Numero, new { @class = "", maxlength = 6 })
+        </div>
+        <div class="grid-2">
+            <label>Série</label>
+            @Html.TextBoxFor(model => model.GuiaUnicaTransporte.Serie, new { @class = "", maxlength = 2 })
+        </div>
+        <div class="grid-4 break">
+            <label>Será emitida hoje: @(Model.GuiaUnicaTransporte.DataEmissao.ToShortDateString())</label>
+        </div>
+    </div>
+    
+    <div class="break">
+        <h1>Transporte</h1>
+        <div class="grid-2 break">
+            <label>Origem</label>
+            @Html.DropDownListFor(model => model.GuiaUnicaTransporte.Origem, new SelectList(Model.Localidades, "Id", "Descricao"))
+        </div>
+        <div class="grid-2">
+            <label>CNPJ</label>
+            <input id="CNPJOrigem" type="text" readonly="true" />
+        </div>
+        <div class="grid-2">
+            <label>Inscrição Estadual</label>
+            <input id="InscricaoEstadualOrigem" type="text" readonly="true" />
+        </div>
+        <div class="grid-2 break">
+            <label>Destino</label>
+            @Html.DropDownListFor(model => model.GuiaUnicaTransporte.Destino, new SelectList(Model.Localidades, "Id", "Descricao"))
+        </div>
+        <div class="grid-2">
+            <label>CNPJ</label>
+            <input id="CNPJDestino" type="text" readonly="true" />
+        </div>
+        <div class="grid-2">
+            <label>Inscrição Estadual</label>
+            <input id="InscricaoEstadualDestino" type="text" readonly="true" />
+        </div>
+    </div>
+    
+    <div class="break">
+        <h1>Finalidade</h1>
+        <div class="grid-6">
+            <label>Finalidade</label>
+            <ul>
+                <li>
+                    <label>Exploração e Produção Marítima</label>
+                    <input id="EPMaritima" name="Finalidade" type="radio" value="EPMaritima" />
+                </li>
+                <li>
+                    <label>Manutenção de Equipamentos</label>
+                    <input id="ManutencaoEquipamentos" name="Finalidade" type="radio" value="ManutencaoEquipamentos" />
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="break">
+        <h1>Itens</h1>
+        <div class="grid-12 break">
+            <label>Descrição dos Itens</label>
+            @(Model.GuiaUnicaTransporte.DescricaoPadrao)
+        </div>
+        <div class="grid-4 break">
+            <label>Número RT</label>
+            <input id="NumeroRT" type="text" />
+        </div>
+        <div class="grid-4">
+            <label>Número Item</label>
+            <input id="NumeroItem" type="text" />
+        </div>
+        <div class="grid-2">
+            <label>Quantidade</label>
+            <input id="Quantidade" type="text" />
+        </div>
+        <div class="grid-2">
+            <label>Unidade de Medida</label>
+            @Html.DropDownList("UnidadeMedida", new SelectList(Model.UnidadesMedida, "Id", "Sigla"))
+        </div>
+        <div class="grid-3 break">
+            <label>Responsabilidade de NF</label>
+            <ul>
+                <li>
+                    <label>Petrobras</label>
+                    <input id="ResponsabilidadeNFPetrobras" name="ResponsabilidadeNF" type="radio" value="Petrobras" />
+                </li>
+                <li>
+                    <label>Contratada</label>
+                    <input id="ResponsabilidadeNFContratada" name="ResponsabilidadeNF" type="radio" value="Contratada" />
+                </li>
+            </ul>
+        </div>
+        <div class="grid-3 ">
+            <label>Empresa Responsável da NF</label>
+            @Html.DropDownList("EmpresaResponsavelNF", new SelectList(Model.Empresas, "Id", "NomeAbreviado"))
+        </div>
+        <div class="grid-3 ">
+            <label>Responsabilidade do Transporte</label>
+            <ul>
+                <li>
+                    <label>Petrobras</label>
+                    <input id="ResponsabilidadeTransportePetrobras" name="ResponsabilidadeTransporte" type="radio" value="Petrobras" />
+                </li>
+                <li>
+                    <label>Contratada</label>
+                    <input id="ResponsabilidadeTransporteContratada" name="ResponsabilidadeTransporte" type="radio" value="Contratada" />
+                </li>
+            </ul>
+        </div>
+        <div class="grid-12 break">
+            <label>Descrição</label>
+            <textarea id="DescricaoItem"></textarea>
+        </div>
+        <div class="break">
+            <input id="btIncluirItem" type="button" value="Incluir Item" />
+        </div>
+        <div id="Lista_Itens" class="break">
+            @*Item Template usado no JQuery*@
+            <article id="Item_Template" class="grid-4" style="display;">
+                <input id="Item_Codigo" type="hidden" />
+                <header>
+                    <label>Número RT <span id="Item_NumeroRT"></span></label>
+                    <label>Item RT <span id="Item_NumeroItem"></span></label>
+                </header>
+                <label>Qtd. <span id="Item_Quantidade"></span></label>
+                <label>Unidade <span id="Item_UnidadeMedida"></span></label>
+                <label>Responsabilidade da NF <span id="Item_ResponsabilidadeNF"></span></label>
+                <label>Empresa Responsável da NF<span id="Item_EmpresaResponsavelNF"></span></label>
+                <label>Responsabilidade do Transporte <span id="Item_ResponsabilidadeTransporte"></span></label>
+                <label>Descrição <span id="Item_Descricao"></span></label>
+                <footer>
+                    <a id="btEditarItem" href="javascript:;">Editar</a>
+                    <a id="btExcluirItem" href="javascript:;">Excluir</a>
+                </footer>
+            </article>
+            @*Item Template usado no JQuery*@
+        </div>
+    </div>
+    
+    <div class="break">
+        <h1>Observações</h1>
+        <div class="grid-12 break">
+            <label>Observações Gerais da GUT</label>
+            @Html.TextAreaFor(model => model.GuiaUnicaTransporte.Observacao);
+        </div>
+    </div>
+    
+    <input id="btEmitirGUT" type="button" value="Emitir GUT" />
+    <a id="btInutilizarGUT" href="javascript:;">Inutilizar GUT</a> 
+    <a id="btGerarRascunho" href="javascript:;">Gerar Rascunho</a> 
+    <a id="btGerarImpressao" href="javascript:;">Gerar Impressão</a> 
+    <input id="btnSalvar" type="button" value="Salvar" />
+    <input id="btnAvancar" type="button" value="Avancar" />
+}

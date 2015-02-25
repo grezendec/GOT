@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="GUT.Entities" namespace="GUT.Entities">
+
+  <class name="ItemGut" schema="GUT" table="ITEM_GUT" lazy="false">
+
+    <id name="Id" type="int" unsaved-value="0" column="GUUT_SQ_GUT">
+      <generator class="sequence">
+        <param name="sequence">SQ_GUUT_SQ_GUT</param>
+      </generator>
+    </id>
+
+    <property name="NumeroRt"    type="int" column="ITGU_NR_RT" not-null="true" />
+    <property name="ItemRt"      type="int" column="ITGU_NR_ITEM_RT" not-null="true" />
+    <property name="Quantidade"  type="int" column="ITGU_QN_MATERIAL" not-null="true" />
+    
+    <property name="Descricao"   type="AnsiString" length="200" column="ITGU_TX_DESCRICAO_MATERIAL" not-null="true" />
+    
+    <property name="IsDescricaoPadrao" type="GUT.Entities.CustomTypes.SimNaoType, GUT.Entities" column="ITGU_IN_DESCRICAO_PADRAO" not-null="true" />
+    
+    <property name="ResponsabilidadeNF"         type="GUT.Entities.CustomTypes.SimNaoType, GUT.Entities" column="ITGU_IN_MATERIAL_PROPRIO" not-null="true" />
+    <property name="ResponsabilidadeTransporte" type="GUT.Entities.CustomTypes.SimNaoType, GUT.Entities" column="ITGU_IN_TRANSPORTE_PROPRIO" not-null="true" />
+
+    <many-to-one name="Unidade" not-null="true" class="UnidadeMedida" column="UNME_CD_UNIDADE" fetch="join" />
+
+    <many-to-one name="Empresa" not-null="false" class="EmpresaResponsavel" column="EMEP_CD_EMPRESA_EP" fetch="join" />
+
+    <bag name="NotasFiscais" cascade="none" inverse="false" lazy="true" schema="GUT" table="NOTA_FISCAL_GUT">
+      <key column="NOFG_SQ_NOTA_FISCAL_GUT" />
+      <many-to-many class="NotaFiscal" column="GUUT_SQ_GUT"/>
+    </bag>
+
+  </class>
+
+</hibernate-mapping>

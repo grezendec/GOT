@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="GUT.Entities" namespace="GUT.Entities">
+
+  <class name="Lotacao" schema="GUT" table="ORGAO_LOT_MENOR" lazy="false">
+
+    <id name="Id" type="int" unsaved-value="0" column="ORME_CD_ORG_MENOR" />
+
+    <property name="Sigla"      type="AnsiString" length="5" column="ORLO_CD_ORG_LOT" insert="false" update="false"/>
+
+    <property name="OrgaoMenor" type="AnsiString" length="50" column="ORME_SG_ORG_MENOR" insert="false" update="false"/>
+    
+    <property name="Descricao"  type="AnsiString" length="120" column="ORME_NM_ORG_MENOR" insert="false" update="false"/>
+
+  </class>
+
+</hibernate-mapping>
